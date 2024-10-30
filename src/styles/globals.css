@@ -1,0 +1,19 @@
+body {
+  cursor: default;
+  font-family: "Segoe UI", "Helvetica", Garuda, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  text-rendering: optimizelegibility;
+  font-weight: lighter;
+}
+
+/* In styles/globals.css */
+
+@media screen and (max-width: 800px) {
+  /* Set mobile viewport to prevent auto zoom */
+  html {
+    touch-action: manipulation;
+    overflow: hidden;
+    user-select: none;
+  }
+}

@@ -1,0 +1,79 @@
+.main_card {
+  width: 1280px;
+  padding: 110px 100px;
+  background-image: url("/assets/bg-img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: auto;
+}
+
+.record {
+  width: 670px;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 500;
+  margin-top: 110px;
+}
+.main_content {
+  margin-top: 20px;
+}
+.content {
+  width: 800px;
+  margin-left: 95px;
+}
+.content_bottom {
+  width: 900px;
+}
+.address {
+  width: 300px;
+}
+
+.text_absolute {
+  position: absolute;
+  top: 10%; /* Adjust as needed */
+  right: 22%;
+}
+
+.edisha {
+  color: white; /* Change text color to stand out against the background */
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 8px;
+  background-color: black;
+}
+
+/* Define styles to keep fixed layout on mobile */
+.pdfContent {
+  width: 1300px; /* Fixed width for a consistent look */
+  margin: 0 auto; /* Center content */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-y: auto; /* Allow vertical scrolling */
+  background-color: white;
+  /* padding: 20px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .text_absolute {
+    top: 5px; /* Adjust top position for smaller screens */
+    left: 5px; /* Adjust left position for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .text_absolute {
+    top: 3px; /* Further adjust for very small screens */
+    left: 3px;
+    font-size: 14px; /* Optionally adjust font size */
+  }
+}
+
+/* Prevent scaling and zooming on mobile devices */
+@media screen and (max-width: 800px) {
+  .pdfContent {
+    transform: scale(0.85); /* Scale down for smaller screens */
+    transform-origin: top center;
+  }
+
+  /* Set mobile viewport for no auto zoom */
+}

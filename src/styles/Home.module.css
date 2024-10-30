@@ -1,0 +1,8 @@
+body {
+  cursor: default;
+  font-family: "Segoe UI", "Helvetica", Garuda, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  text-rendering: optimizelegibility;
+  font-weight: lighter;
+}
