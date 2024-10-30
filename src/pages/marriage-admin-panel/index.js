@@ -161,7 +161,7 @@ const AdminPanel = () => {
   };
   return (
     <div
-      className={`${styles.container_main} container px-2 px-md-5 bg-light rounded shadow-sm mt-1`}
+      className={`${styles.container_main} container px-2 px-md-5 bg-light rounded shadow-sm mt-1 pb-5`}
     >
       <h1 className="fs-4 text-center text-primary mb-2">
         Marriage Registration Certificate
