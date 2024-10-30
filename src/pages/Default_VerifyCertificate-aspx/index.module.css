@@ -4,7 +4,7 @@
   background-image: url("/assets/bg-img.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  margin: auto;
+  height: max-content;
 }
 
 .fixedContainer {
@@ -14,14 +14,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* border: 1px solid #ccc; */
 }
 
 .scaledContent {
   transform: scale(1);
   transform-origin: top left;
-  width: 1200px;
-  height: auto;
+  width: max-content;
+  height: max-content;
 }
 
 .record {
@@ -48,13 +47,13 @@
 .text_absolute {
   position: absolute;
   top: 8%; /* Adjust as needed */
-  right: 10%;
+  right: 18%;
 }
 
 .edisha {
   color: white; /* Change text color to stand out against the background */
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
   padding: 2px 8px;
   background-color: black;
 }

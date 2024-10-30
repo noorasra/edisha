@@ -6,6 +6,8 @@ import React, { useRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { QRCodeCanvas } from "qrcode.react";
+import Popup from "@/components/Popup";
+
 
 const MarriageDataList = () => {
   const router = useRouter(); // Initialize useRouter
@@ -60,7 +62,7 @@ const MarriageDataList = () => {
           const fetchedData = data?.marriageRegistration
             ? [data.marriageRegistration]
             : [];
-          setMarriageData(fetchedData); // Set the data
+          setMarriageData(fetchedData);
           setLoading(false);
           if (fetchedData.length > 0) {
             generatePDF();
@@ -78,7 +80,7 @@ const MarriageDataList = () => {
   useEffect(() => {
     const metaTag = document.createElement("meta");
     metaTag.name = "viewport";
-    metaTag.content = "width=1100px, initial-scale=1";
+    metaTag.content = "width=1100px, initial-scale=0.5";
     document.head.appendChild(metaTag);
 
     return () => {
@@ -137,10 +139,9 @@ const MarriageDataList = () => {
               <div class={styles.text_absolute}>
                 <span className={styles.edisha}>eDisHa</span>
                 <span
-                  className="bg-transparent "
+                  className="bg-transparent pe-2 ps-1"
                   style={{ border: "2px solid", marginLeft: "1px" }}
                 >
-                  {" "}
                   {item.tid}
                 </span>
               </div>
@@ -172,7 +173,9 @@ const MarriageDataList = () => {
                   </p>
                   <p className={`${styles.address_place} fw-bold`}>
                     Place of Marriage:{" "}
-                    <span className={`${styles.address} ms-2 fw-normal`}>
+                    <span
+                      className={`${styles.address} ms-2 text-uppercase fw-normal`}
+                    >
                       {item.placeOfMarriage}
                     </span>
                   </p>
@@ -190,7 +193,7 @@ const MarriageDataList = () => {
               </div>
               <div className={`${styles.content}`}>
                 <div className="d-flex justify-content-between ">
-                  <div className="fw-bold mb-0 ">
+                  <div className="fw-bold mb-0 text-capitalize">
                     Bride Name:{" "}
                     <span className="fw-bold">{item.brideName}</span>{" "}
                   </div>
@@ -202,11 +205,11 @@ const MarriageDataList = () => {
                   </div>
                 </div>
                 <div className="d-flex justify-content-between ">
-                  <p className="fw-bold mb-0">
+                  <p className="fw-bold mb-0 text-capitalize">
                     Father's Name:{" "}
                     <span className="fw-normal">{item.brideFatherName}</span>
                   </p>
-                  <p className="fw-bold mb-0">
+                  <p className="fw-bold mb-0 text-capitalize">
                     Mother's Name:{" "}
                     <span className="fw-normal">{item.brideMotherName}</span>
                   </p>
@@ -214,7 +217,7 @@ const MarriageDataList = () => {
                 <div className="d-flex justify-content-between ">
                   <p className="fw-bold mb-0">
                     Permanent Address:{" "}
-                    <span className="fw-normal ">
+                    <span className="fw-normal text-uppercase">
                       {item.bridePermanentAddress}
                     </span>
                   </p>
@@ -223,7 +226,7 @@ const MarriageDataList = () => {
 
               <div className={`${styles.content} mt-2  `}>
                 <div className="d-flex justify-content-between ">
-                  <p className="fw-bold mb-0">
+                  <p className="fw-bold mb-0 text-capitalize">
                     Bridegroom Name:{" "}
                     <span className="fw-bold">{item.bridegroomName}</span>{" "}
                   </p>
@@ -236,13 +239,13 @@ const MarriageDataList = () => {
                   </p>
                 </div>
                 <div className="d-flex justify-content-between ">
-                  <p className="fw-bold mb-0">
+                  <p className="fw-bold mb-0 text-capitalize">
                     Father's Name:{" "}
                     <span className="fw-normal">
                       {item.bridegroomFatherName}
                     </span>{" "}
                   </p>
-                  <p className="fw-bold mb-0">
+                  <p className="fw-bold mb-0 text-capitalize">
                     Mother's Name:{" "}
                     <span className="fw-normal">
                       {item.bridegroomMotherName}
@@ -252,7 +255,7 @@ const MarriageDataList = () => {
                 <div className="d-flex ">
                   <p className="fw-bold mb-0">
                     Permanent Address:{" "}
-                    <span className="fw-normal ">
+                    <span className="fw-normal text-uppercase">
                       {item.bridegroomPermanentAddress}
                     </span>
                   </p>
@@ -296,7 +299,7 @@ const MarriageDataList = () => {
                     }}
                   />
                   <p
-                    className="fw-bolder text-end mt-3"
+                    className="fw-bolder text-capitalize text-end mt-3"
                     style={{ position: "relative", zIndex: "10" }}
                   >
                     {renderNamesWithLineBreaks(item.issuedbyname)}
@@ -324,28 +327,5 @@ const MarriageDataList = () => {
     </div>
   );
 };
-
-export async function getServerSideProps(context) {
-  const { tid, cid, aid } = context.query;
-
-  try {
-    const response = await fetch(
-      `https://yourapiurl.com/api/fetchMarriageData?tid=${tid}&cid=${cid}&aid=${aid}`
-    );
-    const data = await response.json();
-    console.log(data, "internal");
-
-    return {
-      props: {
-        marriageData: data?.marriageRegistration
-          ? [data.marriageRegistration]
-          : [],
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching data: ", error);
-    return { props: { marriageData: [] } };
-  }
-}
 
 export default MarriageDataList;

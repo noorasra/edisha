@@ -5,19 +5,15 @@ import { db, storage, auth } from "../../lib/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import styles from "../Default_VerifyCertificate-aspx/index.module.css";
+import Popup from "@/components/Popup";
+
 const AdminPanel = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    // Check if the user is authenticated
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (isAuthenticated !== "true") {
-      router.push("/"); // Redirect to login page if not authenticated
-    }
-  }, []);
-
+  const [generatedURL, setGeneratedURL] = useState("");
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state
   const [formData, setFormData] = useState({
     tid: "",
     cid: "",
@@ -61,15 +57,20 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Disable the submit button to prevent multiple submissions
+    if (isSubmitting) return; // Early return if already submitting
+    setIsSubmitting(true); // Set to true when starting submission
+
     // Validation for tid, cid, and aid
     if (
       formData.tid.length !== 15 ||
       formData.cid.length !== 12 ||
-      formData.aid.length !== 2
+      formData.aid.length !== 1
     ) {
       alert(
         "Invalid input! tid must be 15 characters, cid must be 12 characters, and aid must be 2 character."
       );
+      setIsSubmitting(false); // Reset on validation failure
       return;
     }
     // Upload image files to Firebase Storage and get their URLs
@@ -122,6 +123,9 @@ const AdminPanel = () => {
         issuedByImage: issuedByImageUrl,
       });
 
+      const url = `https://testing-mu-swart.vercel.app//Default_VerifyCertificate-aspx?tid=${formData.tid}&cid=${formData.cid}&aid=${formData.aid}`;
+      setGeneratedURL(url);
+      setPopupVisible(true);
       alert("Data successfully stored!");
       setFormData({
         tid: "",
@@ -151,6 +155,9 @@ const AdminPanel = () => {
       document.querySelector("form").reset();
     } catch (error) {
       console.error("Error storing document: ", error);
+    } finally {
+      // Reset isSubmitting state regardless of success or failure
+      setIsSubmitting(false);
     }
   };
 
@@ -219,6 +226,7 @@ const AdminPanel = () => {
                 value={formData.aid}
                 onChange={handleChange}
                 placeholder="Enter AID"
+                maxLength="1"
                 required
               />
             </div>
@@ -592,8 +600,12 @@ const AdminPanel = () => {
           </div>
         </div>
         <div className="text-center mt-2 mt-md-0">
-          <button type="submit" className="btn btn-success">
-            <i className="fas fa-paper-plane"></i> Submit
+          <button
+            type="submit"
+            className="btn btn-success"
+            disabled={isSubmitting} // Disable button when submitting
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
           <button
             type="button"
@@ -619,6 +631,10 @@ const AdminPanel = () => {
           )}
         </div>
       </form>
+
+      {isPopupVisible && (
+        <Popup generatedURL={generatedURL} setPopupVisible={setPopupVisible} />
+      )}
     </div>
   );
 };
