@@ -7,6 +7,23 @@
   margin: auto;
 }
 
+.fixedContainer {
+  width: 1350px;
+  height: 850px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid #ccc; */
+}
+
+.scaledContent {
+  transform: scale(1);
+  transform-origin: top left;
+  width: 1200px;
+  height: auto;
+}
+
 .record {
   width: 670px;
   text-align: center;
@@ -30,8 +47,8 @@
 
 .text_absolute {
   position: absolute;
-  top: 10%; /* Adjust as needed */
-  right: 22%;
+  top: 8%; /* Adjust as needed */
+  right: 10%;
 }
 
 .edisha {

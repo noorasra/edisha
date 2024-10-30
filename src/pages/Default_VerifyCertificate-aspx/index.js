@@ -18,22 +18,21 @@ const MarriageDataList = () => {
   const generatePDF = () => {
     const input = document.getElementById("pdf-content");
 
-    html2canvas(input, { scale: 2 }).then((canvas) => {
+    html2canvas(input, { scale: 0.8 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
 
       // Adjust the dimensions as needed
-      const imgWidth = 210; // A4 width in mm
+      const imgWidth = 150; // A4 width in mm
       const pageHeight = pdf.internal.pageSize.height;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
 
       let position = 0;
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      pdf?.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
-      console.log(imgData);
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
@@ -79,7 +78,7 @@ const MarriageDataList = () => {
   useEffect(() => {
     const metaTag = document.createElement("meta");
     metaTag.name = "viewport";
-    metaTag.content = "width=800px, initial-scale=1";
+    metaTag.content = "width=1100px, initial-scale=1";
     document.head.appendChild(metaTag);
 
     return () => {
@@ -126,193 +125,227 @@ const MarriageDataList = () => {
     ));
   };
   return (
-    <div className="">
+    <div className={styles.fixedContainer}>
       {/* <button onClick={generatePDF} className="btn btn-primary">
         Download Certificate
       </button> */}
 
-      <div id="pdf-content" className={styles.pdfContent}>
-        {filteredData?.map((item) => (
-          <div className={`${styles.main_card} relative `}>
-            <div class={styles.text_absolute}>
-              <span className={styles.edisha}>eDisHa</span>
-              <span
-                className="bg-transparent "
-                style={{ border: "2px solid", marginLeft: "1px" }}
+      <div className={styles.scaledContent}>
+        <div id="pdf-content" className={styles.pdfContent}>
+          {filteredData?.map((item) => (
+            <div className={`${styles.main_card} relative `}>
+              <div class={styles.text_absolute}>
+                <span className={styles.edisha}>eDisHa</span>
+                <span
+                  className="bg-transparent "
+                  style={{ border: "2px solid", marginLeft: "1px" }}
+                >
+                  {" "}
+                  {item.tid}
+                </span>
+              </div>
+              <div className="d-flex justify-content-center mt-5">
+                <p className={`${styles.record} mb-0`}>
+                  This is to certify that the following is an extract from the
+                  registration of the marriage record with Tehsil{" "}
+                  <span className="fw-bold text-capitalize">{item.tehsil}</span>
+                  , District -{" "}
+                  <span className="fw-bold text-capitalize">
+                    {item.district}
+                  </span>{" "}
+                  of state{" "}
+                  <span className="fw-bold text-capitalize">{item.state}</span>{" "}
+                  (INDIA).
+                </p>
+              </div>
+              <div
+                className={`${styles.main_content} d-flex justify-content-between px-5 mx-5`}
+                // style={{ border: "1px solid red" }}
               >
-                {" "}
-                {item.tid}
-              </span>
-            </div>
-            <div className="d-flex justify-content-center mt-5">
-              <p className={`${styles.record} mb-0`}>
-                This is to certify that the following is an extract from the
-                registration of the marriage record with Tehsil{" "}
-                <span className="fw-bold text-capitalize">{item.tehsil}</span>,
-                District -{" "}
-                <span className="fw-bold text-capitalize">{item.district}</span>{" "}
-                of state{" "}
-                <span className="fw-bold text-capitalize">{item.state}</span>{" "}
-                (INDIA).
-              </p>
-            </div>
-            <div
-              className={`${styles.main_content} d-flex justify-content-between px-5 mx-5`}
-              // style={{ border: "1px solid red" }}
-            >
-              <div className="mt-4">
-                <p className="fw-bold">
-                  Date of Marriage:{" "}
-                  <span className={`${styles.date_m} ms-2 fw-normal`}>
-                    {" "}
-                    {formatDate(item.dateOfMarriage)}
-                  </span>{" "}
-                </p>
-                <p className={`${styles.address_place} fw-bold`}>
-                  Place of Marriage:{" "}
-                  <span className={`${styles.address} ms-2 fw-normal`}>
-                    {item.placeOfMarriage}
-                  </span>
-                </p>
-              </div>
-
-              <div className="me-5">
-                <Image
-                  src={item.coupleImage}
-                  width={230}
-                  height={130}
-                  alt="sign_img"
-                  className=""
-                />
-              </div>
-            </div>
-            <div className={`${styles.content}`}>
-              <div className="d-flex justify-content-between ">
-                <div className="fw-bold mb-0 ">
-                  Bride Name: <span className="fw-bold">{item.brideName}</span>{" "}
+                <div className="mt-4">
+                  <p className="fw-bold">
+                    Date of Marriage:{" "}
+                    <span className={`${styles.date_m} ms-2 fw-normal`}>
+                      {" "}
+                      {formatDate(item.dateOfMarriage)}
+                    </span>{" "}
+                  </p>
+                  <p className={`${styles.address_place} fw-bold`}>
+                    Place of Marriage:{" "}
+                    <span className={`${styles.address} ms-2 fw-normal`}>
+                      {item.placeOfMarriage}
+                    </span>
+                  </p>
                 </div>
-                <div className="fw-bold mb-0 ">
-                  Date of Birth:{" "}
-                  <span className="fw-normal">{formatDate(item.brideDOB)}</span>
+
+                <div className="me-5">
+                  <Image
+                    src={item.coupleImage}
+                    width={230}
+                    height={130}
+                    alt="sign_img"
+                    className=""
+                  />
                 </div>
               </div>
-              <div className="d-flex justify-content-between ">
-                <p className="fw-bold mb-0">
-                  Father's Name:{" "}
-                  <span className="fw-normal">{item.brideFatherName}</span>
-                </p>
-                <p className="fw-bold mb-0">
-                  Mother's Name:{" "}
-                  <span className="fw-normal">{item.brideMotherName}</span>
-                </p>
-              </div>
-              <div className="d-flex justify-content-between ">
-                <p className="fw-bold mb-0">
-                  Permanent Address:{" "}
-                  <span className="fw-normal ">
-                    {item.bridePermanentAddress}
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            <div className={`${styles.content} mt-2  `}>
-              <div className="d-flex justify-content-between ">
-                <p className="fw-bold mb-0">
-                  Bridegroom Name:{" "}
-                  <span className="fw-bold">{item.bridegroomName}</span>{" "}
-                </p>
-                <p className="fw-bold mb-0">
-                  Date of Birth:{" "}
-                  <span className="fw-normal">
-                    {" "}
-                    {formatDate(item.bridegroomDOB)}
-                  </span>{" "}
-                </p>
-              </div>
-              <div className="d-flex justify-content-between ">
-                <p className="fw-bold mb-0">
-                  Father's Name:{" "}
-                  <span className="fw-normal">{item.bridegroomFatherName}</span>{" "}
-                </p>
-                <p className="fw-bold mb-0">
-                  Mother's Name:{" "}
-                  <span className="fw-normal">{item.bridegroomMotherName}</span>{" "}
-                </p>
-              </div>
-              <div className="d-flex ">
-                <p className="fw-bold mb-0">
-                  Permanent Address:{" "}
-                  <span className="fw-normal ">
-                    {item.bridegroomPermanentAddress}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div
-              className={`${styles.content_bottom} d-flex justify-content-between px-5 mx-5 mt-2`}
-            >
-              <div className="d-flex align-items-center gap-3">
-                <QRCodeCanvas
-                  value={`http://localhost:3000//verify?tid=${tid}&cid=${cid}&aid=${aid}`}
-                  size={150}
-                  level={"H"}
-                  includeMargin={true}
-                />
-                <div>
+              <div className={`${styles.content}`}>
+                <div className="d-flex justify-content-between ">
+                  <div className="fw-bold mb-0 ">
+                    Bride Name:{" "}
+                    <span className="fw-bold">{item.brideName}</span>{" "}
+                  </div>
+                  <div className="fw-bold mb-0 ">
+                    Date of Birth:{" "}
+                    <span className="fw-normal">
+                      {formatDate(item.brideDOB)}
+                    </span>
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between ">
                   <p className="fw-bold mb-0">
-                    Registration No.: {item.registrationNo}{" "}
+                    Father's Name:{" "}
+                    <span className="fw-normal">{item.brideFatherName}</span>
                   </p>
                   <p className="fw-bold mb-0">
-                    Registration Date: {formatDate(item.registrationDate)}
+                    Mother's Name:{" "}
+                    <span className="fw-normal">{item.brideMotherName}</span>
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between ">
+                  <p className="fw-bold mb-0">
+                    Permanent Address:{" "}
+                    <span className="fw-normal ">
+                      {item.bridePermanentAddress}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div className={`${styles.content} mt-2  `}>
+                <div className="d-flex justify-content-between ">
+                  <p className="fw-bold mb-0">
+                    Bridegroom Name:{" "}
+                    <span className="fw-bold">{item.bridegroomName}</span>{" "}
+                  </p>
+                  <p className="fw-bold mb-0">
+                    Date of Birth:{" "}
+                    <span className="fw-normal">
+                      {" "}
+                      {formatDate(item.bridegroomDOB)}
+                    </span>{" "}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between ">
+                  <p className="fw-bold mb-0">
+                    Father's Name:{" "}
+                    <span className="fw-normal">
+                      {item.bridegroomFatherName}
+                    </span>{" "}
+                  </p>
+                  <p className="fw-bold mb-0">
+                    Mother's Name:{" "}
+                    <span className="fw-normal">
+                      {item.bridegroomMotherName}
+                    </span>{" "}
+                  </p>
+                </div>
+                <div className="d-flex ">
+                  <p className="fw-bold mb-0">
+                    Permanent Address:{" "}
+                    <span className="fw-normal ">
+                      {item.bridegroomPermanentAddress}
+                    </span>
                   </p>
                 </div>
               </div>
               <div
-                className="d-flex flex-column gap-2 text-end"
-                style={{ position: "relative" }}
+                className={`${styles.content_bottom} d-flex justify-content-between px-5 mx-5 mt-2`}
               >
-                <p className="fw-bold">Issued by:</p>
-
-                <Image
-                  src={item.issuedByImage}
-                  width={150}
-                  height={60}
-                  alt="sign_img"
-                  style={{
-                    position: "absolute",
-                    bottom: "35%",
-                    right: "0%",
-                    zIndex: 1,
-                  }}
-                />
-                <p
-                  className="fw-bolder text-end mt-3"
-                  style={{ position: "relative", zIndex: "10" }}
+                <div className="d-flex align-items-center gap-3">
+                  <QRCodeCanvas
+                    value={`https://testing-mu-swart.vercel.app/Default_VerifyCertificate-aspx?tid=${tid}&cid=${cid}&aid=${aid}`}
+                    size={150}
+                    level={"H"}
+                    includeMargin={true}
+                  />
+                  <div>
+                    <p className="fw-bold mb-0">
+                      Registration No.: {item.registrationNo}{" "}
+                    </p>
+                    <p className="fw-bold mb-0">
+                      Registration Date: {formatDate(item.registrationDate)}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="d-flex flex-column gap-2 text-end"
+                  style={{ position: "relative" }}
                 >
-                  {renderNamesWithLineBreaks(item.issuedbyname)}
+                  <p className="fw-bold">Issued by:</p>
+
+                  <Image
+                    src={item.issuedByImage}
+                    width={150}
+                    height={60}
+                    alt="sign_img"
+                    style={{
+                      position: "absolute",
+                      bottom: "35%",
+                      right: "0%",
+                      zIndex: 1,
+                    }}
+                  />
+                  <p
+                    className="fw-bolder text-end mt-3"
+                    style={{ position: "relative", zIndex: "10" }}
+                  >
+                    {renderNamesWithLineBreaks(item.issuedbyname)}
+                  </p>
+                </div>
+              </div>
+
+              <div className={` text-center  d-flex justify-content-center `}>
+                <p
+                  className="mb-0 "
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    borderTop: "1.5px solid ",
+                  }}
+                >
+                  This is computer generated certificate and can be verified at
+                  http://edisha.gov.in
                 </p>
               </div>
             </div>
-
-            <div className={` text-center  d-flex justify-content-center `}>
-              <p
-                className="mb-0 "
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  borderTop: "1.5px solid ",
-                }}
-              >
-                This is computer generated certificate and can be verified at
-                http://edisha.gov.in
-              </p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { tid, cid, aid } = context.query;
+
+  try {
+    const response = await fetch(
+      `https://yourapiurl.com/api/fetchMarriageData?tid=${tid}&cid=${cid}&aid=${aid}`
+    );
+    const data = await response.json();
+    console.log(data, "internal");
+
+    return {
+      props: {
+        marriageData: data?.marriageRegistration
+          ? [data.marriageRegistration]
+          : [],
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+    return { props: { marriageData: [] } };
+  }
+}
 
 export default MarriageDataList;
