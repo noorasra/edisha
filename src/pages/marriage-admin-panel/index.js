@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { db, storage, auth } from "../../lib/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import styles from "../Default_VerifyCertificate-aspx/index.module.css";
 const AdminPanel = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -160,7 +160,9 @@ const AdminPanel = () => {
     router.push("/"); // Redirect to the login page
   };
   return (
-    <div className="container px-2 px-md-5 bg-light rounded shadow-sm mt-1">
+    <div
+      className={`${styles.container_main} container px-2 px-md-5 bg-light rounded shadow-sm mt-1`}
+    >
       <h1 className="fs-4 text-center text-primary mb-2">
         Marriage Registration Certificate
       </h1>
@@ -554,7 +556,7 @@ const AdminPanel = () => {
             </div>
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-4 mt-2 mt-md-0">
             <div className="form-group">
               <label htmlFor="issuedByImage" className="text-primary">
                 Issued By Image
@@ -573,7 +575,7 @@ const AdminPanel = () => {
         </div>
 
         <div className="col-md-4">
-          <div className="form-group">
+          <div className="form-group ">
             <label htmlFor="issuedbyname" className="text-info">
               Issued by name
             </label>
@@ -589,7 +591,7 @@ const AdminPanel = () => {
             />
           </div>
         </div>
-        <div className="text-center">
+        <div className="text-center mt-2 mt-md-0">
           <button type="submit" className="btn btn-success">
             <i className="fas fa-paper-plane"></i> Submit
           </button>
