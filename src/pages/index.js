@@ -52,10 +52,7 @@ export default function Login() {
   }, [router]);
 
   return (
-    <Layout
-      title={Tags.edishahr.title}
-      description={Tags.edishahr.description}
-    >
+    <Layout title={Tags.edishahr.title} description={Tags.edishahr.description}>
       <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
         <div
           className="card p-4 shadow-sm"

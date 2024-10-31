@@ -1,10 +1,10 @@
 .main_card {
   width: 1280px;
   padding: 110px 100px;
-  background-image: url("/assets/bg-img.jpg");
+  background-image: url("/assets/bg-updated.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: max-content;
+  /* height: max-content; */
 }
 
 .fixedContainer {
@@ -12,6 +12,7 @@
   height: 850px;
   overflow: hidden;
   display: flex;
+
   align-items: center;
   justify-content: center;
 }
@@ -60,11 +61,12 @@
 
 /* Define styles to keep fixed layout on mobile */
 .pdfContent {
-  width: 1300px; /* Fixed width for a consistent look */
+  width: max-content; /* Fixed width for a consistent look */
   margin: 0 auto; /* Center content */
   overflow-x: hidden; /* Prevent horizontal overflow */
   overflow-y: auto; /* Allow vertical scrolling */
   background-color: white;
+
   /* padding: 20px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
