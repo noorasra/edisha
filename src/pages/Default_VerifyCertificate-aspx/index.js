@@ -124,9 +124,12 @@ const MarriageDataList = () => {
   };
   return (
     <>
-      {/* <button onClick={generatePDF} className="btn btn-primary">
-        Download Certificate
-      </button> */}
+      <div className="d-flex justify-content-center align-items-center">
+        <button onClick={generatePDF} className="btn  btn-primary">
+          Download Certificate
+        </button>
+      </div>
+
       <div className={styles.fixedContainer}>
         <div className={styles.scaledContent}>
           <div id="pdf-content" className={styles.pdfContent}>
