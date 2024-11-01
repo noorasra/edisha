@@ -31,25 +31,14 @@ const PDFViewer = () => {
 
   return (
     <div>
-      {pdfURL ? (
-        isMobile ? (
-          <a href={pdfURL} target="_blank" rel="noopener noreferrer">
-            Open PDF
-          </a>
-        ) : (
-          <iframe
-            src={pdfURL}
-            width="100%"
-            height="670px"
-            title="PDF Viewer"
-            style={{ border: "none" }}
-          />
-        )
-      ) : (
-        <p>Loading...</p>
-      )}
+      <iframe
+        src={pdfURL}
+        width="100%"
+        height="670px"
+        title="PDF Viewer"
+        style={{ border: "none" }}
+      />
     </div>
-    
   );
 };
 
