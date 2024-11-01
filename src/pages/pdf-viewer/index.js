@@ -139,7 +139,7 @@ const MarriageDataList = ({ onPdfUrlGenerated }) => {
 
   useEffect(() => {
     if (barcodeRef.current && tid && cid && aid) {
-      const url = `https://yourwebsite.com/verify?tid=${tid}&cid=${cid}&aid=${aid}`;
+      const url = `https://edisha.vercel.app/verify?tid=${tid}&cid=${cid}&aid=${aid}`;
       JsBarcode(barcodeRef.current, url, {
         format: "CODE128",
         width: 2,
@@ -308,14 +308,14 @@ const MarriageDataList = ({ onPdfUrlGenerated }) => {
                 >
                   <div className="d-flex align-items-center gap-3">
                     <QRCodeCanvas
-                      value={`https://testing-mu-swart.vercel.app/Default_VerifyCertificate-aspx?tid=${tid}&cid=${cid}&aid=${aid}`}
+                      value={`https://edisha.vercel.app/Default_VerifyCertificate-aspx?tid=${tid}&cid=${cid}&aid=${aid}`}
                       size={150}
                       level={"H"}
                       includeMargin={true}
                     />
                     <div>
                       <p className="fw-bold mb-0">
-                        Registration No.: {item.registrationNo}{" "}
+                        Registration No.: {item.registrationNo}
                       </p>
                       <p className="fw-bold mb-0">
                         Registration Date: {formatDate(item.registrationDate)}
