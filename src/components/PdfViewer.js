@@ -6,6 +6,8 @@ import fetchPDF from "../utils/fetchPDF"; // Adjust the path according to your s
 const PDFViewer = () => {
   const [pdfURL, setPdfURL] = useState("");
   const router = useRouter(); // Access the router object
+  const [isMobile, setIsMobile] = useState(false);
+  console.log(pdfURL, "pdf");
 
   useEffect(() => {
     const { tid, cid, aid } = router.query; // Extract query parameters
@@ -24,22 +26,30 @@ const PDFViewer = () => {
     } else {
       console.error("Missing parameters in the URL.");
     }
+    setIsMobile(/Mobi|Android/i.test(navigator.userAgent));
   }, [router.query]); // Run when router.query changes
 
   return (
     <div>
       {pdfURL ? (
-        <iframe
-          src={pdfURL}
-          width="100%"
-          height="670px"
-          title="PDF Viewer"
-          style={{ border: "none" }}
-        />
+        isMobile ? (
+          <a href={pdfURL} target="_blank" rel="noopener noreferrer">
+            Open PDF
+          </a>
+        ) : (
+          <iframe
+            src={pdfURL}
+            width="100%"
+            height="670px"
+            title="PDF Viewer"
+            style={{ border: "none" }}
+          />
+        )
       ) : (
-        <p></p>
+        <p>Loading...</p>
       )}
     </div>
+    
   );
 };
 
