@@ -1,31 +1,30 @@
 // pages/login.js
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { auth } from "../lib/firebaseConfig"; // Import the initialized Firebase auth
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import the sign-in method
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "@/components/layout/Layout";
 import Tags from "@/constants/tags";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Change username to email
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  // Hardcoded credentials
-  const hardcodedUsername = "admin";
-  const hardcodedPassword = "admin@5600";
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Check if the entered credentials match
-    if (username === hardcodedUsername && password === hardcodedPassword) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password); // Authenticate user
+
       // Store authentication status and the current timestamp
       localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("loginTime", Date.now()); // Store the current timestamp
+      localStorage.setItem("loginTime", Date.now());
 
       router.push("/marriage-admin-panel"); // Redirect to the admin panel
-    } else {
-      alert("Invalid username or password");
+    } catch (error) {
+      alert("Invalid email or password: " + error.message); // Show error message
     }
   };
 
@@ -42,7 +41,6 @@ export default function Login() {
   };
 
   useEffect(() => {
-    // Check if session is valid when component mounts
     if (
       isSessionValid() &&
       localStorage.getItem("isAuthenticated") === "true"
@@ -61,16 +59,16 @@ export default function Login() {
           <h2 className="text-center mb-4">Admin Login</h2>
           <form onSubmit={handleLogin}>
             <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
+              <label htmlFor="email" className="form-label">
+                Email
               </label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
-                id="username"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                id="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>

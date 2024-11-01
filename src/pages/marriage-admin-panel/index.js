@@ -8,6 +8,8 @@ import styles from "../Default_VerifyCertificate-aspx/index.module.css";
 import Popup from "@/components/Popup";
 import Tags from "@/constants/tags";
 import Layout from "@/components/layout/Layout";
+import { getAuth } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 const AdminPanel = () => {
   const router = useRouter();
@@ -16,6 +18,19 @@ const AdminPanel = () => {
   const [generatedURL, setGeneratedURL] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // New state
+
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        router.push("/"); // Redirect to login if not authenticated
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup on unmount
+  }, [router, auth]);
+
   const [formData, setFormData] = useState({
     tid: "",
     cid: "",
@@ -125,7 +140,7 @@ const AdminPanel = () => {
         issuedByImage: issuedByImageUrl,
       });
 
-      const url = `https://testing-mu-swart.vercel.app//Default_VerifyCertificate-aspx?tid=${formData.tid}&cid=${formData.cid}&aid=${formData.aid}`;
+      const url = `https://testing-mu-swart.vercel.app/Default_VerifyCertificate-aspx?tid=${formData.tid}&cid=${formData.cid}&aid=${formData.aid}`;
       setGeneratedURL(url);
       setPopupVisible(true);
       alert("Data successfully stored!");
@@ -155,6 +170,9 @@ const AdminPanel = () => {
         issuedbyname: "",
       });
       document.querySelector("form").reset();
+      router.push(
+        `/pdf-viewer?tid=${formData.tid}&cid=${formData.cid}&aid=${formData.aid}`
+      );
     } catch (error) {
       console.error("Error storing document: ", error);
     } finally {
@@ -163,7 +181,8 @@ const AdminPanel = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut(auth);
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("loginTime");
     router.push("/"); // Redirect to the login page
@@ -614,7 +633,7 @@ const AdminPanel = () => {
               className="btn btn-success"
               disabled={isSubmitting} // Disable button when submitting
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? "Next..." : "Next"}
             </button>
             <button
               type="button"

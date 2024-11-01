@@ -7,8 +7,7 @@ const Popup = ({ generatedURL, setPopupVisible }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header ">
-            <h5 className="modal-title " >Generated URL</h5>
-            
+            <h5 className="modal-title ">Generated URL</h5>
           </div>
           <div className="modal-body text-center">
             <p>You can access the details at the following URL:</p>
