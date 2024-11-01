@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { firebaseConfig } from "../../firebaseConfig"; // Adjust path if needed
+import { firebaseConfig } from "../../lib/firebaseConfig"; // Adjust path if needed
 
 // Initialize Firebase App and Firestore
 const app = initializeApp(firebaseConfig);
