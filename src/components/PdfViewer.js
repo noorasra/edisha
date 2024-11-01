@@ -7,7 +7,6 @@ const PDFViewer = () => {
   const [pdfURL, setPdfURL] = useState("");
   const router = useRouter(); // Access the router object
   const [isMobile, setIsMobile] = useState(false);
-  console.log(pdfURL, "pdf");
 
   useEffect(() => {
     const { tid, cid, aid } = router.query; // Extract query parameters
@@ -33,28 +32,28 @@ const PDFViewer = () => {
 
   return (
     <div>
-      {isMobile ? (
-        <object
-          data={pdfURL}
-          type="application/pdf"
-          width="100%"
-          height="670px"
-          aria-label="PDF Viewer"
-          style={{ border: "none" }}
-        >
-          <p>
-            Your browser does not support PDFs.
-            <a href={pdfURL}>Download the PDF</a>.
-          </p>
-        </object>
-      ) : (
-        <iframe
-          src={pdfURL}
-          width="100%"
-          height="670px"
-          title="PDF Viewer"
-          style={{ border: "none" }}
-        />
+      {pdfURL && (
+        <>
+          {isMobile ? (
+            // Use an <embed> tag for mobile
+            <embed
+              src={pdfURL}
+              width="100%"
+              height="670px"
+              type="application/pdf"
+              style={{ border: "none" }}
+            />
+          ) : (
+            // Use an <iframe> for desktop
+            <iframe
+              src={pdfURL}
+              width="100%"
+              height="670px"
+              title="PDF Viewer"
+              style={{ border: "none" }}
+            />
+          )}
+        </>
       )}
     </div>
   );
